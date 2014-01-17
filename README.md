@@ -2,20 +2,6 @@
 
 HashCache is a small collection of hashes that cache data.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'hash_cache'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install hash_cache
-
 ## Usage
 
 HashCache provides the following classes.
@@ -52,6 +38,20 @@ sleep(6)
 # Runs the block
 h.memoize(:a) { |k| calculation_for(k) }
 ```
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'hash_cache'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install hash_cache
 
 ## Coming Soon
 
