@@ -53,6 +53,10 @@ sleep(6)
 h.memoize(:a) { |k| calculation_for(k) }
 ```
 
+## Coming Soon
+
+Other classes with different cache expiration strategies.
+
 ## Contributing
 
 1. Fork it
