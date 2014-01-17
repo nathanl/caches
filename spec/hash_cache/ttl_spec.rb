@@ -13,7 +13,7 @@ describe HashCache::TTL do
 
   let(:start_time) { Time.now }
   let(:before_ttl) { start_time + 1800 }
-  let(:after_ttl)  { start_time + 3602 }
+  let(:after_ttl)  { start_time + 3601 }
 
   it "remembers cached values before the TTL expires" do
     expect(cache[:c]).to eq('Caspian')
@@ -32,6 +32,13 @@ describe HashCache::TTL do
     cache.stub(:current_time).and_return(after_ttl)
     expect(cache[:c]).to be_nil
     expect(cache[:c]).to be_nil
+  end
+
+  it "resets TTL when an item is updated" do
+    cache.stub(:current_time).and_return(before_ttl)
+    cache[:c] = 'Cornelius'
+    cache.stub(:current_time).and_return(after_ttl)
+    expect(cache[:c]).to eq('Cornelius')
   end
 
   it "doesn't reset TTL when an item is accessed" do
