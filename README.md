@@ -68,4 +68,4 @@ Other classes with different cache expiration strategies.
 # Thanks
 
 - Thanks to [FromAToB.com](http://www.fromatob.com) for giving me time to make this
-- Thanks to [https://github.com/satyap](satyap); the original specs for `hash_cache` were adapted from [volatile_hash](https://github.com/satyap/volatile_hash).
+- Thanks to [satyap](https://github.com/satyap); the original specs for `hash_cache` were adapted from [volatile_hash](https://github.com/satyap/volatile_hash).
