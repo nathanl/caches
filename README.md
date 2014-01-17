@@ -1,10 +1,10 @@
-# HashCache
+# `hash_cache`
 
-HashCache is a small collection of hashes that cache data.
+`hash_cache` is a Ruby gem, providing a small collection of hashes that cache data.
 
 ## Usage
 
-HashCache provides the following classes.
+`hash_cache` provides the following classes.
 
 ### HashCache::TTL
 
