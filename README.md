@@ -8,7 +8,7 @@ HashCache provides the following classes.
 
 ### HashCache::TTL
 
-TTL (Time To Live) remembers values for as many seconds as you tell it. The default is 3600 seconds (1 hours).
+TTL (Time To Live) remembers values for as many seconds as you tell it. The default is 3600 seconds (1 hour).
 
 ```ruby
 require 'hash_cache/ttl'
