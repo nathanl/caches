@@ -1,5 +1,8 @@
+require_relative 'accessible'
+
 module HashCache
   class LRU
+    include Accessible
     attr_accessor :max_keys
 
     def initialize(options = {})

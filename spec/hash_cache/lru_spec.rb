@@ -1,4 +1,5 @@
 require          'spec_helper'
+require          'fetch_examples'
 require_relative '../../lib/hash_cache/lru'
 
 describe HashCache::LRU do
@@ -45,6 +46,12 @@ describe HashCache::LRU do
     cache[:e] = 'Erimon'
     expect(cache[:a]).to eq('Alambil')
     expect(cache[:b]).to be_nil
+  end
+
+  include_examples "fetch"
+
+  describe "memoize" do
+    # TODO
   end
 
 end
