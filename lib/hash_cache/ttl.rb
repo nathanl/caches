@@ -1,5 +1,8 @@
+require_relative 'accessible'
+
 module HashCache
   class TTL
+    include Accessible
     attr_accessor :ttl, :refresh
 
     def initialize(options = {})
@@ -21,20 +24,6 @@ module HashCache
 
     def []=(key, val)
       data[key] = {time: current_time, value: val}
-    end
-
-    def fetch(key, default = (default_omitted = true; nil))
-      return self[key]  if data.has_key?(key)
-      return default    unless default_omitted
-      return yield(key) if block_given?
-      raise KeyError
-    end
-
-    def memoize(key)
-      raise ArgumentError, "Block is required" unless block_given?
-      self[key] # triggers flush or refresh if expired
-      return self[key]       if data.has_key?(key)
-      self[key] = yield(key) if block_given?
     end
 
     private
