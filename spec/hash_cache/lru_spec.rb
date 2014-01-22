@@ -51,7 +51,57 @@ describe HashCache::LRU do
   include_examples "fetch"
 
   describe "memoize" do
-    # TODO
+
+    it "requires a block" do
+      expect{cache_memoize(:c)}.to raise_error
+    end
+
+    let(:greeting) { 'hi' }
+
+    context "when the key already exists" do
+
+      it "does not calculate the value" do
+        expect(greeting).not_to receive(:upcase)
+        cache.memoize(:c) { greeting.upcase }
+      end
+
+    end
+
+    context "when the key has not been set" do
+
+      let(:key) { :nonexistent }
+
+      it "calculates the value" do
+        expect(greeting).to receive(:upcase)
+        cache.memoize(:nonexistent) { greeting.upcase }
+      end
+
+      it "sets the value" do
+        cache.memoize(:nonexistent) { greeting.upcase }
+        expect(cache[:nonexistent]).to eq(greeting.upcase)
+      end
+
+    end
+
+    context "when the key has been dropped" do
+
+      before :each do
+        cache[:d] = 'Destrier'
+        cache[:e] = 'Erimon'
+      end
+
+      it "calculates the value" do
+        expect(greeting).to receive(:upcase)
+        cache.memoize(:a) { greeting.upcase }
+      end
+
+      it "sets the value" do
+        cache.memoize(:a) { greeting.upcase }
+        expect(cache[:a]).to eq(greeting.upcase)
+      end
+
+    end
+
   end
 
 end
