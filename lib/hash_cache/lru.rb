@@ -27,8 +27,8 @@ module HashCache
       val
     end
 
-    def keys
-      _keys.dup
+    def size
+      _keys.length
     end
 
     private

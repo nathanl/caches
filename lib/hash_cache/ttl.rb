@@ -26,6 +26,10 @@ module HashCache
       data[key] = {time: current_time, value: val}
     end
 
+    def size
+      data.keys.length
+    end
+
     private
 
     attr_accessor :data

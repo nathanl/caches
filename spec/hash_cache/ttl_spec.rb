@@ -16,6 +16,10 @@ describe HashCache::TTL do
   let(:before_ttl) { start_time + 1800 }
   let(:after_ttl)  { start_time + 3601 }
 
+  it "can report its size" do
+    expect(cache.size).to eq(1)
+  end
+
   it "remembers cached values before the TTL expires" do
     expect(cache[:c]).to eq('Caspian')
     cache.stub(:current_time).and_return(before_ttl)

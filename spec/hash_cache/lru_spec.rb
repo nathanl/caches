@@ -19,19 +19,19 @@ describe HashCache::LRU do
     expect(cache[:c]).to eq('Caspian')
   end
 
-  it "has an accessor for keys" do
-    expect(cache.keys.count).to eq(3)
+  it "can report its size" do
+    expect(cache.size).to eq(3)
   end
 
   it "can grow up to the max size given" do
     cache[:d] = 'Destrier'
-    expect(cache.keys.count).to eq(4)
+    expect(cache.size).to eq(4)
   end
 
   it "does not grow beyond the max size given" do
     cache[:d] = 'Destrier'
     cache[:e] = 'Erimon'
-    expect(cache.keys.count).to eq(4)
+    expect(cache.size).to eq(4)
   end
 
   it "drops the least-recently accessed key" do
