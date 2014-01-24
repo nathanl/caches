@@ -13,12 +13,12 @@ module HashCache
 
     def [](key)
       return nil unless data.has_key?(key)
-      _keys.unshift(_keys.delete_at(_keys.index(key)))
+      _keys.unshift(_keys.delete_at(_keys.index(key))) # O(N)
       data[key]
     end
 
     def []=(key, val)
-      _keys.unshift(key)
+      _keys.unshift(key) # Wrong - assumes it's an insert
       data[key] = val
       if _keys.length > max_keys
         expiring_key = _keys.pop
