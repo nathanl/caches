@@ -3,20 +3,70 @@ require_relative '../../lib/hash_cache/linked_list'
 
 describe HashCache::LinkedList do
 
-  let(:list) { described_class.new('lemur') }
+  let(:list)       { described_class.new('lemur') }
+  let(:node_class) { HashCache::LinkedList::Node }
 
-  it "can convert itself to an array" do
+  it "can convert itself to an array of values" do
     expect(list.to_a).to eq(['lemur'])
   end
 
-  it "can append an item" do
-    list.append('wombat')
-    expect(list.to_a).to eq(['lemur', 'wombat'])
+  describe '#append' do
+
+    it "adds an item to the end" do
+      list.append('wombat')
+      expect(list.to_a).to eq(['lemur', 'wombat'])
+    end
+
+    it "returns a Node" do
+      node = list.append('wombat')
+      expect(node).to be_a(node_class)
+    end
+
   end
 
-  it "can prepend an item" do
+  describe "#prepend" do
+
+    it "adds an item to the beginning" do
+      list.prepend('vole')
+      expect(list.to_a).to eq(['vole', 'lemur'])
+    end
+
+    it "returns a Node" do
+      node = list.prepend('vole')
+      expect(node).to be_a(node_class)
+    end
+
+  end
+
+  it "knows its length" do
+    expect(list.length).to eq(1)
+    list.append('wombat')
     list.prepend('vole')
-    expect(list.to_a).to eq(['vole', 'lemur'])
+    expect(list.length).to eq(3)
+  end
+
+  describe "#move_to_head" do
+
+    context "when the argument is a Node" do
+
+      it "makes it the new head" do
+        list.append('mittens')
+        node = list.append('cozy')
+        list.move_to_head(node)
+        expect(list.to_a).to eq(%w[cozy lemur mittens])
+      end
+
+    end
+
+    context "when the argument is not a Node" do
+
+      it "raises an error" do
+        list.append('cozy')
+        expect{list.move_to_head('super duper')}.to raise_error(HashCache::LinkedList::InvalidNode)
+      end
+
+    end
+
   end
 
   context "when there's more than one item" do
@@ -27,14 +77,31 @@ describe HashCache::LinkedList do
       list
     }
 
-    it "can pop the last item" do
-      expect(list.pop).to eq('muskrat')
-      expect(list.to_a).to eq(['lemur'])
+    describe "#pop" do
+
+      it "removes the last item" do
+        list.pop
+        expect(list.to_a).to eq(['lemur'])
+      end
+
+      it "returns a node" do
+        expect(list.pop).to be_a(node_class)
+      end
+
     end
 
-    it "can pop the first item" do
-      expect(list.lpop).to eq('lemur')
-      expect(list.to_a).to eq(['muskrat'])
+
+    describe "#lpop" do
+
+      it "removes the first item" do
+        list.lpop
+        expect(list.to_a).to eq(['muskrat'])
+      end
+
+      it "returns a node" do
+        expect(list.lpop).to be_a(node_class)
+      end
+
     end
 
   end
