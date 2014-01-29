@@ -25,7 +25,7 @@ module HashCache
     end
 
     def append(item)
-      Node.new(item, tail).tap { |new_tail|
+      Node.new(item, left: tail).tap { |new_tail|
         tail.right = new_tail
         self.tail  = new_tail
         self.length = length + 1
@@ -33,7 +33,7 @@ module HashCache
     end
 
     def prepend(item)
-      Node.new(item, nil, head).tap { |new_head|
+      Node.new(item, right: head).tap { |new_head|
         if length == 0
           self.head = new_head
           self.tail = new_head
@@ -86,7 +86,14 @@ module HashCache
       node
     end
 
-    Node = Struct.new(:value, :left, :right) do
+    class Node
+      attr_accessor :value, :right, :left
+      def initialize(value, pointers = {})
+        self.value = value
+        self.right = pointers[:right]
+        self.left  = pointers[:left]
+      end
+
       def right?; !right.nil?; end
       def left?;  !left.nil?   end
     end
