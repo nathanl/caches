@@ -5,4 +5,5 @@
 - Add Travis CI testing
 - Give all caches a way to manually invalidate a given key. Return nil if it wasn't here and the value if it was.
 - Add "least used" cache class
+- Define `blank?`, etc on list and caches
 - Ride a skateboard and, simultaneously, shoot a potato gun
