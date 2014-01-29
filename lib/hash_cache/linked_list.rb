@@ -74,6 +74,15 @@ module HashCache
       length == 0
     end
 
+    # TODO - move these to a module and use in caches, too
+    alias :blank? :empty?
+    def present?
+      !empty?
+    end
+    def presence
+      self if present?
+    end
+
     private
     attr_accessor :head, :tail
     attr_writer   :length
