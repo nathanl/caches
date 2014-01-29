@@ -3,6 +3,7 @@ require_relative '../../lib/hash_cache/linked_list'
 
 describe HashCache::LinkedList do
 
+  let(:empty_list) { described_class.new }
   let(:list)       { described_class.new('lemur') }
   let(:node_class) { HashCache::LinkedList::Node }
 
@@ -22,6 +23,11 @@ describe HashCache::LinkedList do
       expect(node).to be_a(node_class)
     end
 
+    it "sets up the list correctly if it was empty to start with" do
+      empty_list.append('jimmy')
+      expect{empty_list.prepend('jammy')}.not_to raise_error
+    end
+
   end
 
   describe "#prepend" do
@@ -34,6 +40,11 @@ describe HashCache::LinkedList do
     it "returns a Node" do
       node = list.prepend('vole')
       expect(node).to be_a(node_class)
+    end
+
+    it "sets up the list correctly if it was empty to start with" do
+      empty_list.prepend('jimmy')
+      expect{empty_list.append('jammy')}.not_to raise_error
     end
 
   end

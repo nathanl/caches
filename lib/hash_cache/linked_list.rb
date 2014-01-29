@@ -9,8 +9,10 @@ module HashCache
 
     def initialize(item = nil)
       if item
-        self.head   = self.tail = Node.new(item)
-        self.length = 1
+        Node.new(item).tap { |node|
+          self.head   = self.tail = node
+          self.length = 1
+        }
       else
         self.length = 0
       end
@@ -25,6 +27,7 @@ module HashCache
     end
 
     def append(item)
+      return initialize(item) if empty?
       Node.new(item, left: tail).tap { |new_tail|
         tail.right = new_tail
         self.tail  = new_tail
@@ -33,14 +36,10 @@ module HashCache
     end
 
     def prepend(item)
+      return initialize(item) if empty?
       Node.new(item, right: head).tap { |new_head|
-        if length == 0
-          self.head = new_head
-          self.tail = new_head
-        else
-          head.left = new_head
-          self.head = new_head
-        end
+        head.left = new_head
+        self.head = new_head
         self.length = length + 1
       }
     end
@@ -69,6 +68,10 @@ module HashCache
       excise(node)
       node.right = head
       self.head  = node
+    end
+
+    def empty?
+      length == 0
     end
 
     private
