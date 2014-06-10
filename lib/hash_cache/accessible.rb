@@ -3,8 +3,8 @@ module HashCache
 
     def fetch(key, default = (default_omitted = true; nil))
       return self[key]  if data.has_key?(key)
-      return default    unless default_omitted
       return yield(key) if block_given?
+      return default    unless default_omitted
       raise KeyError
     end
 

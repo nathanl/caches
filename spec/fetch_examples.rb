@@ -16,8 +16,8 @@ shared_examples "fetch" do
     expect(cache.fetch(:nonexistent) { |key| key.to_s.upcase }).to eq('NONEXISTENT')
   end
 
-  it "uses the immediate value if both it and the block are supplied" do
-    expect(cache.fetch(:nonexistent, 'hi') { |key| key.to_s.upcase }).to eq('hi')
+  it "prefers a block value to an immediate one (like native hashes do)" do
+    expect(cache.fetch(:nonexistent, 'hi') { |key| key.to_s.upcase }).to eq('NONEXISTENT')
   end
 
 end
