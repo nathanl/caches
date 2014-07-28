@@ -1,4 +1,4 @@
-module HashCache
+module Caches
   module Accessible
 
     def fetch(key, default = (default_omitted = true; nil))

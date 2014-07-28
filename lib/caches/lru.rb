@@ -1,7 +1,7 @@
 require_relative 'accessible'
 require_relative 'linked_list'
 
-module HashCache
+module Caches
   class LRU
     include Accessible
     attr_accessor :max_keys

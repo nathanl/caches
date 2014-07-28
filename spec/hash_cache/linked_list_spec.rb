@@ -1,11 +1,11 @@
 require          'spec_helper'
-require_relative '../../lib/hash_cache/linked_list'
+require_relative '../../lib/caches/linked_list'
 
-describe HashCache::LinkedList do
+describe Caches::LinkedList do
 
   let(:empty_list) { described_class.new }
   let(:list)       { described_class.new('lemur') }
-  let(:node_class) { HashCache::LinkedList::Node }
+  let(:node_class) { Caches::LinkedList::Node }
 
   it "can convert itself to an array of values" do
     expect(list.to_a).to eq(['lemur'])
@@ -73,7 +73,7 @@ describe HashCache::LinkedList do
 
       it "raises an error" do
         list.append('cozy')
-        expect{list.move_to_head('super duper')}.to raise_error(HashCache::LinkedList::InvalidNode)
+        expect{list.move_to_head('super duper')}.to raise_error(Caches::LinkedList::InvalidNode)
       end
 
     end

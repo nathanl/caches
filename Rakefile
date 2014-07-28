@@ -9,7 +9,7 @@ end
 task :console do
   require 'irb'
   require 'irb/completion'
-  require 'hash_cache/all'
+  require 'caches/all'
   ARGV.clear
   IRB.start
 end

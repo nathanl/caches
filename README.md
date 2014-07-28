@@ -1,19 +1,19 @@
-# `hash_cache`
+# `caches`
 
-`hash_cache` is a Ruby gem, providing a small collection of caches with good performance and hash-like access patterns. Each is named for its cache expiration strategy - when it will drop a key.
+`caches` is a Ruby gem, providing a small collection of caches with good performance and hash-like access patterns. Each is named for its cache expiration strategy - when it will drop a key.
 
 ## Usage
 
-`hash_cache` provides the following classes.
+`caches` provides the following classes.
 
-### HashCache::TTL
+### Caches::TTL
 
 TTL (Time To Live) remembers values for as many seconds as you tell it. The default is 3600 seconds (1 hour).
 
 ```ruby
-require 'hash_cache/ttl'
+require 'caches/ttl'
 
-h = HashCache::TTL.new(ttl: 5)
+h = Caches::TTL.new(ttl: 5)
 h[:a] = 'aardvark'
 h[:a] #=> 'aardvark'
 sleep(6)
@@ -25,7 +25,7 @@ If you pass `refresh: true`, reading a value will reset its timer; otherwise, on
 The `memoize` method fetches a key if it exists and isn't expired; otherwise, it calculates the value using the block and saves it.
 
 ```ruby
-h = HashCache::TTL.new(ttl: 5)
+h = Caches::TTL.new(ttl: 5)
 
 # Runs the block
 h.memoize(:a) { |k| calculation_for(k) }
@@ -39,13 +39,13 @@ sleep(6)
 h.memoize(:a) { |k| calculation_for(k) }
 ```
 
-### HashCache::LRU
+### Caches::LRU
 
 LRU (Least Recently Used) remembers as many keys as you tell it to, dropping the least recently used key on each insert after its limit is reached.
 
 ```ruby
-require 'hash_cache/lru'
-h = HashCache::LRU.new(max_keys: 3)
+require 'caches/lru'
+h = Caches::LRU.new(max_keys: 3)
 h[:a] = "aardvark"
 h[:b] = "boron"
 h[:c] = "cattail"
@@ -57,7 +57,7 @@ puts h[:a] # => nil
 
 Add this line to your application's Gemfile:
 
-    gem 'hash_cache'
+    gem 'caches'
 
 And then execute:
 
@@ -65,7 +65,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install hash_cache
+    $ gem install caches
 
 ## Coming Soon
 
@@ -82,4 +82,4 @@ Other classes with different cache expiration strategies.
 # Thanks
 
 - Thanks to [FromAToB.com](http://www.fromatob.com) for giving me time to make this
-- Thanks to [satyap](https://github.com/satyap); the original specs for `hash_cache` were adapted from [volatile_hash](https://github.com/satyap/volatile_hash).
+- Thanks to [satyap](https://github.com/satyap); the original specs for `caches` were adapted from [volatile_hash](https://github.com/satyap/volatile_hash).

@@ -1,4 +1,4 @@
-module HashCache
+module Caches
   # This LinkedList class is unusual in that it gives direct access to its nodes.
   # It trusts the user not to break it! The advantage is that outsiders with
   # a node reference can reorder the list (eg, using #move_to_head) in O(1) time.

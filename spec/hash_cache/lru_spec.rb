@@ -1,8 +1,8 @@
 require          'spec_helper'
 require          'fetch_examples'
-require_relative '../../lib/hash_cache/lru'
+require_relative '../../lib/caches/lru'
 
-describe HashCache::LRU do
+describe Caches::LRU do
 
   let(:options) { {max_keys: 4} }
   let(:cache)   {

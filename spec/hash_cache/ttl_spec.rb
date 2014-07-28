@@ -1,8 +1,8 @@
 require          'spec_helper'
 require          'fetch_examples'
-require_relative '../../lib/hash_cache/ttl'
+require_relative '../../lib/caches/ttl'
 
-describe HashCache::TTL do
+describe Caches::TTL do
 
   let(:options) { {} }
   let(:cache)   {

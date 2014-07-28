@@ -1,6 +1,6 @@
 require_relative 'accessible'
 
-module HashCache
+module Caches
   class TTL
     include Accessible
     attr_accessor :ttl, :refresh
