@@ -1,6 +1,6 @@
 # `hash_cache`
 
-`hash_cache` is a Ruby gem, providing a small collection of hashes that cache data.
+`hash_cache` is a Ruby gem, providing a small collection of caches with good performance and hash-like access patterns. Each is named for its cache expiration strategy - when it will drop a key.
 
 ## Usage
 
@@ -37,6 +37,20 @@ sleep(6)
 
 # Runs the block
 h.memoize(:a) { |k| calculation_for(k) }
+```
+
+### HashCache::LRU
+
+LRU (Least Recently Used) remembers as many keys as you tell it to, dropping the least recently used key on each insert after its limit is reached.
+
+```ruby
+require 'hash_cache/lru'
+h = HashCache::LRU.new(max_keys: 3)
+h[:a] = "aardvark"
+h[:b] = "boron"
+h[:c] = "cattail"
+h[:d] = "dingo"
+puts h[:a] # => nil
 ```
 
 ## Installation
