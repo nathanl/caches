@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Caches::VERSION
   spec.authors       = ["Nathan Long"]
   spec.email         = ["nathanmlong@gmail.com"]
-  spec.description   = %q{A small collection of hashes that cache}
-  spec.summary       = %q{A small collection of hashes that cache}
+  spec.description   = %q{A small collection of caches with good performance and hash-like access patterns}
+  spec.summary       = %q{Caches with hash-like access}
   spec.homepage      = "https://github.com/nathanl/caches"
   spec.license       = "MIT"
 
