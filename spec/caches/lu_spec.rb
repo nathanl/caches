@@ -29,4 +29,17 @@ describe Caches::LU::Datum do
     expect(datum.utility).to eq(0.5)
   end
 
+  describe "comparison to another datum" do
+
+    let(:datum2) { described_class.new(value, created_at) }
+
+    it "is by utility" do
+      datum.use
+      expect(datum > datum2).to be_true
+      2.times { datum2.use }
+      expect(datum2 > datum).to be_true
+    end
+
+  end
+
 end

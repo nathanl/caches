@@ -6,6 +6,7 @@ module Caches
   class LU
 
     class Datum
+      include Comparable
 
       attr_accessor :value, :created_at
 
@@ -27,6 +28,11 @@ module Caches
 
       def uses
         @uses
+      end
+
+      def <=>(other)
+        return unless other.is_a?(self.class)
+        utility <=> other.utility
       end
 
       private
