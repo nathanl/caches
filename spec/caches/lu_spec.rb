@@ -2,6 +2,24 @@ require          'spec_helper'
 require          'fetch_examples'
 require_relative '../../lib/caches/lu'
 
+describe Caches::LU do
+
+  it "stores each value in a datum"
+
+  it "creates a new datum when a key is written"
+
+  it "uses the datum when a key is read"
+
+  it "keeps a list of keys, sorted by utility"
+
+  it "moves a key up in the list as its utility increases"
+
+  it "has a maximum number of keys"
+
+  it "drops the least useful key on insertion to avoid exceeding its max keys"
+
+end
+
 describe Caches::LU::Datum do
 
   let(:value)      { "muffins" }

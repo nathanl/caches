@@ -4,6 +4,7 @@ require_relative 'linked_list'
 
 module Caches
   class LU
+    include Accessible
 
     class Datum
       include Comparable
