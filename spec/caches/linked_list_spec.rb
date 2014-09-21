@@ -11,6 +11,13 @@ describe Caches::LinkedList do
     expect(list.to_a).to eq(['lemur'])
   end
 
+  it "knows its length" do
+    expect(list.length).to eq(1)
+    list.append('wombat')
+    list.prepend('vole')
+    expect(list.length).to eq(3)
+  end
+
   describe '#append' do
 
     it "adds an item to the end" do
@@ -49,11 +56,28 @@ describe Caches::LinkedList do
 
   end
 
-  it "knows its length" do
-    expect(list.length).to eq(1)
-    list.append('wombat')
-    list.prepend('vole')
-    expect(list.length).to eq(3)
+  describe "#delete" do
+
+    before :each do
+      @wombat_node = list.append('wombat')
+      list.append('vole')
+      expect(list.to_a).to eq(%w[lemur wombat vole])
+      expect(list.length).to eq(3)
+      @deleted_node = list.delete(@wombat_node)
+    end
+
+    it "removes an item" do
+      expect(list.to_a).to eq(%w[lemur vole])
+    end
+
+    it "returns the removed item" do
+      expect(@deleted_node).to eq(@wombat_node)
+    end
+
+    it "decrements the length" do
+      expect(list.length).to eq(2)
+    end
+
   end
 
   describe "#move_to_head" do

@@ -83,6 +83,12 @@ module Caches
       self if present?
     end
 
+    def delete(node)
+      excise(node).tap {
+        self.length = length - 1
+      }
+    end
+
     private
     attr_accessor :head, :tail
     attr_writer   :length

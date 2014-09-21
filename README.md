@@ -20,9 +20,17 @@ sleep(0.02)
 h[:a] #=> nil
 ```
 
-If you pass `refresh: true`, reading a value will reset its timer; otherwise, only writing will.
+#### Initialization Options
 
-The `memoize` method fetches a key if it exists and isn't expired; otherwise, it calculates the value using the block and saves it.
+- With `refresh: true`, reading a value will reset its timer; otherwise, only writing will.
+- With `max_keys: 5`, on insertion, it will evict the oldest item if necessary to keep from exceeding 5 keys.
+
+#### Methods
+
+`keys` and `values` work the same as for a hash. They **do not** check whether each key is current.
+
+`memoize` method fetches a key if it exists and isn't expired; otherwise, it calculates the value using the block and saves it.
+
 
 ```ruby
 h = Caches::TTL.new(ttl: 5)
