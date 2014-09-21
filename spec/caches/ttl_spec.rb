@@ -4,17 +4,14 @@ require_relative '../../lib/caches/ttl'
 
 describe Caches::TTL do
 
-  let(:options) { {} }
+  let(:ttl)         { 0.01 }
+  let(:most_of_ttl) { ttl * 0.8 }
+  let(:options)     { { ttl: ttl} }
   let(:cache)   {
     described_class.new(options).tap {|c|
       c[:c] = 'Caspian'
-      c.stub(:current_time).and_return(start_time)
     }
   }
-
-  let(:start_time) { Time.now }
-  let(:before_ttl) { start_time + 1800 }
-  let(:after_ttl)  { start_time + 3601 }
 
   it "can report its size" do
     expect(cache.size).to eq(1)
@@ -22,45 +19,45 @@ describe Caches::TTL do
 
   it "remembers cached values before the TTL expires" do
     expect(cache[:c]).to eq('Caspian')
-    cache.stub(:current_time).and_return(before_ttl)
-    expect(cache[:c]).to eq('Caspian')
   end
 
   it "forgets cached values after the TTL expires" do
     expect(cache[:c]).to eq('Caspian')
-    cache.stub(:current_time).and_return(after_ttl)
+    sleep(ttl)
     expect(cache[:c]).to be_nil
   end
 
   it "continues returning nil for cached values after the TTL expires" do
     expect(cache[:c]).to eq('Caspian')
-    cache.stub(:current_time).and_return(after_ttl)
+    sleep(ttl)
     expect(cache[:c]).to be_nil
     expect(cache[:c]).to be_nil
   end
 
   it "resets TTL when an item is updated" do
-    cache.stub(:current_time).and_return(before_ttl)
+    expect(cache[:c]).to eq('Caspian')
+    sleep(most_of_ttl)
     cache[:c] = 'Cornelius'
-    cache.stub(:current_time).and_return(after_ttl)
+    sleep(most_of_ttl)
     expect(cache[:c]).to eq('Cornelius')
   end
 
   it "doesn't reset TTL when an item is accessed" do
-    cache.stub(:current_time).and_return(before_ttl)
     expect(cache[:c]).to eq('Caspian')
-    cache.stub(:current_time).and_return(after_ttl)
+    sleep(most_of_ttl)
+    expect(cache[:c]).to eq('Caspian')
+    sleep(most_of_ttl)
     expect(cache[:c]).to be_nil
   end
 
   context "when asked to refresh TTL on access" do
 
-    let(:options) { {refresh: true} }
+    let(:options) { {ttl: ttl, refresh: true} }
 
     it "keeps values that were accessed before the TTL expired" do
-      cache.stub(:current_time).and_return(before_ttl)
+      sleep(most_of_ttl)
       expect(cache[:c]).to eq('Caspian')
-      cache.stub(:current_time).and_return(after_ttl)
+      sleep(most_of_ttl)
       expect(cache[:c]).to eq('Caspian')
     end
 
@@ -85,7 +82,6 @@ describe Caches::TTL do
         end
 
         it "does not calculate the value" do
-          cache.stub(:current_time).and_return(before_ttl)
           expect(greeting).not_to receive(:upcase)
           cache.memoize(:c) { greeting.upcase }
         end
@@ -95,13 +91,15 @@ describe Caches::TTL do
       context "after the TTL is up" do
 
         it "recalculates the value" do
-          cache.stub(:current_time).and_return(after_ttl)
+          expect(cache[:c]).to eq('Caspian')
+          sleep(ttl)
           expect(greeting).to receive(:upcase)
           cache.memoize(:c) { greeting.upcase }
         end
 
         it "returns the calculated value" do
-          cache.stub(:current_time).and_return(after_ttl)
+          expect(cache[:c]).to eq('Caspian')
+          sleep(ttl)
           expect(cache.memoize(:c) { |key| key.to_s.upcase }).to eq('C')
         end
 
@@ -122,14 +120,14 @@ describe Caches::TTL do
 
       it "does not calculate the value again within the TTL" do
         cache.memoize(:nonexistent) { greeting.upcase }
-        cache.stub(:current_time).and_return(before_ttl)
+        sleep(most_of_ttl)
         expect(greeting).not_to receive(:upcase)
         cache.memoize(:nonexistent) { greeting.upcase }
       end
 
       it "does calculate the value again after the TTL is up" do
         cache.memoize(:nonexistent) { greeting.upcase }
-        cache.stub(:current_time).and_return(after_ttl)
+        sleep(ttl)
         expect(greeting).to receive(:upcase)
         cache.memoize(:nonexistent) { greeting.upcase }
       end

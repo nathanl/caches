@@ -8,15 +8,15 @@
 
 ### Caches::TTL
 
-TTL (Time To Live) remembers values for as many seconds as you tell it. The default is 3600 seconds (1 hour).
+TTL (Time To Live) remembers values for as many seconds as you tell it. The default is 3600 seconds (1 hour). Sub-seconds are supported; the tests will fail if the value is too low for your machine.
 
 ```ruby
 require 'caches/ttl'
 
-h = Caches::TTL.new(ttl: 5)
+h = Caches::TTL.new(ttl: 0.01)
 h[:a] = 'aardvark'
 h[:a] #=> 'aardvark'
-sleep(6)
+sleep(0.02)
 h[:a] #=> nil
 ```
 
