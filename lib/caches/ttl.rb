@@ -17,12 +17,11 @@ module Caches
     def [](key)
       return nil unless data.has_key?(key)
       if current?(key) 
-        data[key][:time] = current_time if refresh
-        data[key][:value]
+        data[key][:value].tap {
+          data[key][:time] = current_time if refresh
+        }
       else
-        node = data[key][:node]
-        nodes.delete(node)
-        data.delete(key)
+        delete(key)
         nil
       end
     end
@@ -39,6 +38,13 @@ module Caches
         node = nodes.prepend(key)
       end
       data[key] = {time: current_time, value: val, node: node}
+    end
+
+    def delete(key)
+      node = data[key][:node]
+      nodes.delete(node)
+      hash = data.delete(key)
+      hash.fetch(:value)
     end
 
     def size

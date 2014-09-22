@@ -7,7 +7,7 @@ describe Caches::TTL do
   let(:ttl)         { 0.01 }
   let(:most_of_ttl) { ttl * 0.8 }
   let(:options)     { { ttl: ttl} }
-  let(:cache)   {
+  let!(:cache)   {
     described_class.new(options).tap {|c|
       c[:a] = 'Aravis'
       c[:b] = 'Bern'
@@ -19,24 +19,36 @@ describe Caches::TTL do
     expect(cache.size).to eq(3)
   end
 
-  it "remembers cached values before the TTL expires" do
-    expect(cache[:c]).to eq('Caspian')
+  it "can delete keys" do
+    expect(cache.keys).to eq(%i[a b c])
     expect(cache.size).to eq(3)
     # testing private method
     expect(cache.send(:nodes).length).to eq(3)
-  end
 
-  it "forgets cached values when a read is attempted after the TTL expires" do
-    expect(cache[:c]).to eq('Caspian')
-    sleep(ttl)
-    expect(cache[:c]).to be_nil
+    deleted = cache.delete(:b)
+    expect(deleted).to eq('Bern')
+
+    expect(cache.keys).to eq(%i[a c])
     expect(cache.size).to eq(2)
     # testing private method
     expect(cache.send(:nodes).length).to eq(2)
+  end
+
+  it "remembers cached values before the TTL expires" do
+    expect(cache).not_to receive(:delete)
+    expect(cache[:c]).to eq('Caspian')
+    expect(cache.size).to eq(3)
+  end
+
+  it "forgets cached values when a read is attempted after the TTL expires" do
+    sleep(ttl)
+    expect(cache).to receive(:delete).with(:a).and_call_original
     expect(cache[:a]).to be_nil
+    expect(cache.size).to eq(2)
+
+    expect(cache).to receive(:delete).with(:c).and_call_original
+    expect(cache[:c]).to be_nil
     expect(cache.size).to eq(1)
-    # testing private method
-    expect(cache.send(:nodes).length).to eq(1)
   end
 
   describe "listing keys and values" do
