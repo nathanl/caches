@@ -75,10 +75,6 @@ Or install it yourself as:
 
     $ gem install caches
 
-## Coming Soon
-
-Other classes with different cache expiration strategies.
-
 ## Contributing
 
 1. Fork it
