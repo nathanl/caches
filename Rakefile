@@ -6,6 +6,11 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = '--format documentation'
 end
 
+desc "Run the benchmarks"
+RSpec::Core::RakeTask.new(:benchmark) do |t|
+  t.rspec_opts = '--format documentation --tag benchmark'
+end
+
 task :console do
   require 'irb'
   require 'irb/completion'
