@@ -48,7 +48,7 @@ module Caches
     end
 
     def size
-      keys.length
+      nodes.length
     end
 
     def keys
