@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `Caches::TTL` supports `#delete(key)`
+- Added a CONTRIBUTING guide
+- Benchmarking with Ruby 2.1.3
 
 ### Changed
 Nothing
