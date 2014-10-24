@@ -1,5 +1,6 @@
 require 'time'
 require_relative 'accessible'
+require_relative 'linked_list'
 
 module Caches
   class TTL
@@ -16,7 +17,7 @@ module Caches
 
     def [](key)
       return nil unless data.has_key?(key)
-      if current?(key) 
+      if current?(key)
         data[key][:value].tap {
           data[key][:time] = current_time if refresh
         }
