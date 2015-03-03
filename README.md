@@ -49,7 +49,7 @@ h.memoize(:a) { |k| calculation_for(k) }
 
 ### Caches::LRU
 
-LRU (Least Recently Used) remembers as many keys as you tell it to, dropping the least recently used key on each insert after its limit is reached.
+LRU (Least Recently Used) remembers as many keys as you tell it to, dropping the least recently used key on each insert after its limit is reached. (Inserts and reads count as a usage; updates do not.)
 
 ```ruby
 require 'caches/lru'
