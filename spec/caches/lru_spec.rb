@@ -62,7 +62,8 @@ describe Caches::LRU do
 
       it "does not calculate the value" do
         expect(greeting).not_to receive(:upcase)
-        cache.memoize(:c) { greeting.upcase }
+        val = cache.memoize(:c) { greeting.upcase }
+        expect(val).to eq("Caspian")
       end
 
     end
@@ -72,8 +73,9 @@ describe Caches::LRU do
       let(:key) { :nonexistent }
 
       it "calculates the value" do
-        expect(greeting).to receive(:upcase)
-        cache.memoize(:nonexistent) { greeting.upcase }
+        expect(greeting).to receive(:upcase).and_call_original
+        val = cache.memoize(:nonexistent) { greeting.upcase }
+        expect(val).to eq("HI")
       end
 
       it "sets the value" do
