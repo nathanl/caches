@@ -13,6 +13,7 @@ module Caches
     end
 
     def [](key)
+      return nil if max_keys.zero?
       return nil unless data.has_key?(key)
       value, node = data[key]
       keys.move_to_head(node)
@@ -20,6 +21,7 @@ module Caches
     end
 
     def []=(key, val)
+      return nil if max_keys.zero?
       if data.has_key?(key)
         data[key][0] = val
       else

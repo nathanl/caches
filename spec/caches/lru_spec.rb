@@ -106,5 +106,22 @@ describe Caches::LRU do
 
   end
 
+  describe "when max_keys is 0" do
+
+    let(:options) { {max_keys: 0} }
+    let(:greeting) { 'hi' }
+
+    it "doesn't store anything" do
+      expect(cache[:a]).to eq(nil)
+    end
+
+    it "always runs a memoize block" do
+      expect(greeting).to receive(:upcase).and_call_original
+      val = cache.memoize(:a) { greeting.upcase }
+      expect(val).to eq("HI")
+    end
+
+  end
+
 end
 

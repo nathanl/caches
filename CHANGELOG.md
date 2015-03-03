@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - `Caches::TTL` supports `#delete(key)`
 - Added a CONTRIBUTING guide
 - Benchmarking with Ruby 2.1.3
+- `Caches::LRU` can handle `max_keys: 0`
 
 ### Changed
 Nothing
