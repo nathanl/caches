@@ -228,7 +228,7 @@ describe Caches::TTL do
       cache[:a]
       cache[:b]
       cache[:nope]
-      expect(cache.stats).to eq(hits: 2, misses: 1)
+      expect(cache.stats).to eq(hits: 2, misses: 1, hit_rate: "66.66666666666666%")
     end
 
   end
