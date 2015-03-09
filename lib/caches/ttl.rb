@@ -1,11 +1,16 @@
 require 'time'
 require_relative 'accessible'
 require_relative 'linked_list'
+require_relative 'stats'
 
 module Caches
   class TTL
     include Accessible
+    prepend Stats
     attr_accessor :ttl, :refresh
+
+    attr_accessor :data, :nodes, :max_keys
+    private       :data, :nodes, :max_keys
 
     def initialize(options = {})
       self.ttl      = options.fetch(:ttl) { 3600 }
@@ -16,12 +21,17 @@ module Caches
     end
 
     def [](key)
-      return nil unless data.has_key?(key)
+      unless data.has_key?(key)
+        record_cache_miss
+        return nil
+      end
       if current?(key)
+        record_cache_hit
         data[key][:value].tap {
           data[key][:time] = current_time if refresh
         }
       else
+        record_cache_miss
         delete(key)
         nil
       end
@@ -73,8 +83,6 @@ module Caches
     def full?
       max_keys && size >= max_keys
     end
-
-    attr_accessor :data, :nodes, :max_keys
 
     def current_time
       Time.now

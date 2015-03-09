@@ -1,20 +1,29 @@
 require_relative 'accessible'
 require_relative 'linked_list'
+require_relative 'stats'
 
 module Caches
   class LRU
     include Accessible
+    prepend Stats
     attr_accessor :max_keys
+
+    attr_accessor :keys, :data
+    private       :keys, :data
 
     def initialize(options = {})
       self.max_keys = options.fetch(:max_keys, 20)
       self.data     = {}
-      self.keys = LinkedList.new
+      self.keys     = LinkedList.new
     end
 
     def [](key)
       return nil if max_keys.zero?
-      return nil unless data.has_key?(key)
+      unless data.has_key?(key)
+        record_cache_miss
+        return nil 
+      end
+      record_cache_hit
       value, node = data[key]
       keys.move_to_head(node)
       value
@@ -37,7 +46,6 @@ module Caches
     end
 
     private
-    attr_accessor :keys, :data
 
     def prune
       return unless keys.length > max_keys

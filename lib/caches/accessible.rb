@@ -2,7 +2,8 @@ module Caches
   module Accessible
 
     def fetch(key, default = (default_omitted = true; nil))
-      return self[key]  if data.has_key?(key)
+      value = self[key]
+      return value if data.has_key?(key)
       return yield(key) if block_given?
       return default    unless default_omitted
       raise KeyError
@@ -10,8 +11,8 @@ module Caches
 
     def memoize(key)
       raise ArgumentError, "Block is required" unless block_given?
-      self[key] # triggers flush or refresh if expired
-      return self[key]       if data.has_key?(key)
+      value = self[key]
+      return value if data.has_key?(key)
       self[key] = yield(key) if block_given?
     end
 

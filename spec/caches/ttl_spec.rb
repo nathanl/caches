@@ -222,4 +222,15 @@ describe Caches::TTL do
 
   end
 
+  describe "stats" do
+
+    it "can report hits and misses" do
+      cache[:a]
+      cache[:b]
+      cache[:nope]
+      expect(cache.stats).to eq(hits: 2, misses: 1)
+    end
+
+  end
+
 end
