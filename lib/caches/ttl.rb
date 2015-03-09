@@ -15,9 +15,8 @@ module Caches
     def initialize(options = {})
       self.ttl      = options.fetch(:ttl) { 3600 }
       self.refresh  = !!(options.fetch(:refresh, false))
-      self.data     = {}
-      self.nodes    = LinkedList.new
       self.max_keys = options[:max_keys]
+      initialize_data
     end
 
     def [](key)
@@ -70,7 +69,17 @@ module Caches
       data.values.map { |h| h.fetch(:value) }
     end
 
+    def clear
+      initialize_data
+    end
+
     private
+
+    def initialize_data
+      self.data     = {}
+      self.nodes    = LinkedList.new
+      self
+    end
 
     def current?(key)
       (current_time - data[key][:time]) < ttl

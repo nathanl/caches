@@ -63,9 +63,10 @@ puts h[:a] # => nil
 
 ## Methods Common to All Caches
 
-- `stats` tells how many cache hits and misses have occurred
-- `fetch` works like `Hash#fetch`
-- `memoize` returns the key's value, if any; if not, it gets its return value from the block, and sets the key before it returns
+- `#fetch` works like `Hash#fetch`
+- `#memoize` returns the key's value, if any; if not, it gets its return value from the block, and sets the key before it returns
+- `#stats` tells how many cache hits and misses have occurred
+- `#clear` resets all data and stats
 
 ## Installation
 

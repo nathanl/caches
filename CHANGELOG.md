@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 - Nothing
 
+## 0.0.7 - 2015-03-09
+
+- `#clear` method clears a cache's data and stats
+- Bugfix for `#stats`: 0 hits and 0 misses is `0%`, not `NaN`
+
 ## 0.0.6 - 2015-03-09
 
 - Stats include a percentage
@@ -13,7 +18,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- `Caches::TTL` and `Caches::LRU` support `#stats`, which gives counts of how many cache hits and misses have occurred
+- `#stats` method gives counts of how many cache hits and misses have occurred
 
 ## 0.0.4 - 2015-03-03
 

@@ -134,5 +134,27 @@ describe Caches::LRU do
 
   end
 
+  describe "clear" do
+
+    it "clears all cached data" do
+      cache.clear
+      expect(cache.size).to eq(0)
+    end
+
+    it "clears the stats" do
+      cache[:a]
+      cache[:nope]
+      cache.clear
+      expect(cache.stats).to eq(hits: 0, misses: 0, hit_rate: "0.0%")
+    end
+
+    it "returns the empty cache" do
+      id = cache.object_id
+      returned = cache.clear
+      expect(returned.object_id).to eq(id)
+    end
+
+  end
+
 end
 

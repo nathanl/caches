@@ -13,8 +13,7 @@ module Caches
 
     def initialize(options = {})
       self.max_keys = options.fetch(:max_keys, 20)
-      self.data     = {}
-      self.keys     = LinkedList.new
+      initialize_data
     end
 
     def [](key)
@@ -45,7 +44,17 @@ module Caches
       keys.length
     end
 
+    def clear
+      initialize_data
+    end
+
     private
+
+    def initialize_data
+      self.data     = {}
+      self.keys     = LinkedList.new
+      self
+    end
 
     def prune
       return unless keys.length > max_keys

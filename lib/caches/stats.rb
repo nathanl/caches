@@ -1,7 +1,7 @@
 module Caches
   module Stats
 
-    def initialize(*args)
+    def initialize_data
       @hits   = 0
       @misses = 0
       super
@@ -22,8 +22,9 @@ module Caches
     end
 
     def hit_rate
-      rate = (Float(@hits) / (Float(@hits) + Float(@misses)))
-      "#{rate * 100}%"
+      attempts = Float(@hits) + Float(@misses)
+      ratio    = attempts.zero? ? 0.0 : Float(@hits) / attempts
+      "#{ratio * 100}%"
     end
 
   end
