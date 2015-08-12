@@ -4,7 +4,7 @@ require_relative '../../lib/caches/ttl'
 
 describe Caches::TTL do
 
-  let(:ttl)         { 0.01 }
+  let(:ttl)         { 0.1 }
   let(:most_of_ttl) { ttl * 0.8 }
   let(:options)     { { ttl: ttl} }
   let!(:cache)   {
