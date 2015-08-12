@@ -53,7 +53,7 @@ describe Caches::LRU do
   describe "memoize" do
 
     it "requires a block" do
-      expect{cache_memoize(:c)}.to raise_error
+      expect{cache.memoize(:c)}.to raise_error(ArgumentError)
     end
 
     let(:greeting) { 'hi' }
