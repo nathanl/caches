@@ -3,6 +3,7 @@
 `caches` is a Ruby gem, providing a small collection of caches with good performance and hash-like access patterns. Each is named for its cache expiration strategy - when it will drop a key.
 
 [![Build Status](https://travis-ci.org/nathanl/caches.svg?branch=master)](https://travis-ci.org/nathanl/caches)
+[![Code Climate](https://codeclimate.com/github/nathanl/caches/badges/gpa.svg)](https://codeclimate.com/github/nathanl/caches)
 
 ## Usage
 
