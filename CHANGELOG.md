@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-- Nothing
+- Small bugfix: in TTL, "refresh on read" also puts key last in line for eviction in case the cache gets too full
 
 ## 0.0.7 - 2015-03-09
 
