@@ -74,7 +74,6 @@ module Caches
       length == 0
     end
 
-    # TODO - move these to a module and use in caches, too
     alias :blank? :empty?
     def present?
       !empty?

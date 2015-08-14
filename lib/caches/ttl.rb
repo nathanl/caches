@@ -26,7 +26,7 @@ module Caches
       end
       if current?(key)
         record_cache_hit
-        data[key][:value].tap {
+        data.fetch(key).fetch(:value).tap {
           data[key][:time] = current_time if refresh
         }
       else
@@ -82,11 +82,11 @@ module Caches
     end
 
     def current?(key)
-      (current_time - data[key][:time]) < ttl
+      expiration_time(key) >= current_time
     end
 
-    def expired?(key)
-      !current?(key)
+    def expiration_time(key)
+      data.fetch(key).fetch(:time) + ttl
     end
 
     def full?
