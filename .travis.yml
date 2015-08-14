@@ -1,5 +1,5 @@
+# Maybe look at advanced settings like those used in https://github.com/lostisland/faraday/blob/master/.travis.yml
 language: ruby
 rvm:
   - 2.2.2
   - 2.1.0
-  - rbx-2.1.1
