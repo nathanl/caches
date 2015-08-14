@@ -177,7 +177,8 @@ describe Caches::TTL do
 
   describe "supporting a maximum size" do
 
-    let(:options) { {ttl: ttl, max_keys: 3} }
+    let(:refresh) { false }
+    let(:options) { {ttl: ttl, max_keys: 3, refresh: refresh} }
 
     let!(:cache)   {
       described_class.new(options).tap {|c|
@@ -205,7 +206,19 @@ describe Caches::TTL do
 
       it "evicts the oldest key on insertion" do
         cache[:d] = 'Drinian'
-        expect(cache.size).to eq(3)
+        expect(cache.keys).to eq([:b, :c, :d])
+      end
+
+      context "if it was set to refresh on read" do
+
+        let(:refresh) { true }
+
+        it "takes reads into account when deciding what to evict" do
+          cache[:a]
+          cache[:d] = 'Drinian'
+          expect(cache.keys).to eq([:a, :c, :d])
+        end
+
       end
 
       it "doesn't evict on update" do

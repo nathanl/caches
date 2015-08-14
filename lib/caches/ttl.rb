@@ -27,7 +27,10 @@ module Caches
       if current?(key)
         record_cache_hit
         data.fetch(key).fetch(:value).tap {
-          data[key][:time] = current_time if refresh
+          if refresh
+            data[key][:time] = current_time 
+            nodes.move_to_head(data[key][:node])
+          end
         }
       else
         record_cache_miss
